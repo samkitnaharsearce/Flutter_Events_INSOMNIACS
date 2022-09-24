@@ -1,39 +1,8 @@
 import 'dart:convert';
 import "package:flutter/material.dart";
 import 'package:qr_flutter/qr_flutter.dart';
-
-class QRHomePage extends StatelessWidget{
-  const QRHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/images/bgImage.png"),
-          fit: BoxFit.fill,
-        ),
-      ),
-      child: Column(
-        children: [
-          const TopBar(),
-          Expanded(
-            flex: 3,
-            child: Container(
-              // decoration: BoxDecoration(
-              //   border: Border.all(
-              //     color: Colors.red,
-              //   )
-              // ),
-              child: const QRArea(),
-            ),
-          ),
-          const BottomBar(),
-        ],
-      ),
-    );
-  }
-}
+import '../../constants/tempConstants.dart';
+import '../../modules/scanQRScreen/screen/scanQRScreen.dart';
 
 class TopBar extends StatelessWidget{
   const TopBar({super.key});
@@ -58,6 +27,7 @@ class TopBar extends StatelessWidget{
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 25,
+                  fontWeight: FontWeight.w600
                 ),
               ),
             ),
@@ -70,11 +40,13 @@ class TopBar extends StatelessWidget{
       ),
     );
   }
-
 }
 
 class BottomBar extends StatelessWidget{
-  const BottomBar({super.key});
+
+  bool qrGenerated = false;
+
+  BottomBar({required this.qrGenerated, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -91,13 +63,8 @@ class BottomBar extends StatelessWidget{
           ),
           Container(
               alignment: Alignment.center,
-              // width: MediaQuery.of(context).size.width * 0.7
               width: 295,
               child: OutlinedButton(
-                // style: const ButtonStyle(
-                //   backgroundColor: MaterialStatePropertyAll(Color(0xFF7D7D7D)),
-                //   elevation: MaterialStatePropertyAll(5),
-                // ),
                 style: OutlinedButton.styleFrom(
                   elevation: 5,
                   backgroundColor: const Color(0xFF7D7D7D),
@@ -105,7 +72,12 @@ class BottomBar extends StatelessWidget{
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
                 ),
-                onPressed: () { debugPrint("Pressed Camera"); },
+                onPressed: (QRJsonDataMap.qrGenerated == false) ? null : () {
+                  debugPrint("Pressed Camera");
+                  Navigator.of(context).push(MaterialPageRoute(builder: (builder) {
+                    return const ScanQRScreen();
+                  }));
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: const [
@@ -135,44 +107,86 @@ class BottomBar extends StatelessWidget{
 }
 
 class QRArea extends StatelessWidget{
-  const QRArea({super.key});
+
+  bool qrGenerated = false;
+  final Function? onQRGeneratePressed;
+
+  QRArea({required this.qrGenerated, required this.onQRGeneratePressed, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            "Scan the QR to connect",
-            style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.w600,
-              fontFamily: 'lato',
-            ),
+    debugPrint(qrGenerated.toString());
+    if(QRJsonDataMap.qrGenerated){
+      QRJsonDataMap.dict = {'url':'www.google.com','email':'mail.google@gmail.com'};
+    }
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text(
+          "Scan the QR to connect",
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'lato',
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.03,),
-          QrImage(
-            data: jsonEncode({'title':'This is a random data', 'message':'there is nothing to have in this message', 'url':'www.google.com'}),
-            // data: jsonEncode({'url':'https://www.google.com'}),
-            size: 300,
-            gapless: false,
-            errorStateBuilder: (cxt, err) {
-              return const Center(
-                child: Text(
-                  "Uh oh! Something went wrong...",
-                  textAlign: TextAlign.center,
+        ),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.03,),
+        SizedBox(
+          height: MediaQuery.of(context).size.width * 0.85,
+          width: MediaQuery.of(context).size.width * 0.85,
+          child: Stack(
+            children: [
+              Center(
+                child: InkWell(
+                  child: QrImage(
+                    data: jsonEncode(QRJsonDataMap.dict),
+                    size: MediaQuery.of(context).size.width * 0.75,
+                    gapless: false,
+                    errorStateBuilder: (cxt, err) {
+                      return const Center(
+                        child: Text(
+                          "Uh oh! Something went wrong...",
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+                    },
+                    version: QrVersions.auto,
+                    embeddedImage: const AssetImage('assets/images/olympicPattern.png'),
+                    embeddedImageStyle: QrEmbeddedImageStyle(
+                      size: const Size(70, 70),
+                    ),
+                  ),
+                  onTap: () {debugPrint("Pressed Download QR");},
                 ),
-              );
-            },
-            version: QrVersions.auto,
-            embeddedImage: const AssetImage('assets/images/olympicPattern.png'),
-            embeddedImageStyle: QrEmbeddedImageStyle(
-              size: const Size(70, 70),
-            ),
+              ),
+              (QRJsonDataMap.qrGenerated == false) ? Container(
+                color: const Color(0x80000000),
+                child: Center(
+                  child: TextButton(
+                    onPressed: () {
+                      debugPrint("Pressed QR Generated");
+                      onQRGeneratePressed!();
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.blueAccent,
+                      foregroundColor: Colors.white,
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      )
+                    ),
+                    child: const Text("Generate QR",
+                      style: TextStyle(
+                        fontSize: 25,
+                      ),
+                    ),
+                  ),
+                ),
+              ) : Container(),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

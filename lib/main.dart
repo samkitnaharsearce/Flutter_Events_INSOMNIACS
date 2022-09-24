@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import './modules/splashScreen/splashScreen.dart';
-import './modules/ScanQR/screen/scanQRScreen.dart';
-import './components/molecules/tempMolecules.dart';
+import 'modules/splashScreen/screen/splashScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,12 +10,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const ScanQRScreen(),
+      home: const SplashScreen(),
     );
   }
 }

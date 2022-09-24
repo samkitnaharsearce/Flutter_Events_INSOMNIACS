@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:svc_insomniacs/modules/homeQRScreen/screen/homeQRScreen.dart';
 
 class ScanQRScreen extends StatefulWidget {
   const ScanQRScreen({Key? key}) : super(key: key);
@@ -71,7 +72,7 @@ class _QRViewState extends State<ScanQRScreen> {
                   ),
                 ),
                 Expanded(flex: 5, child: Container(child:  null,),),
-                const BottomBar(),
+                BottomBar(controller: controller),
               ],
             ),
           ],
@@ -170,7 +171,10 @@ class QRDialogueBox extends StatelessWidget{
 }
 
 class BottomBar extends StatelessWidget{
-  const BottomBar({super.key});
+
+  final QRViewController? controller;
+
+  const BottomBar({required this.controller, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -190,10 +194,6 @@ class BottomBar extends StatelessWidget{
               // width: MediaQuery.of(context).size.width * 0.7
               width: 295,
               child: OutlinedButton(
-                // style: const ButtonStyle(
-                //   backgroundColor: MaterialStatePropertyAll(Color(0xFF7D7D7D)),
-                //   elevation: MaterialStatePropertyAll(5),
-                // ),
                 style: OutlinedButton.styleFrom(
                   elevation: 5,
                   backgroundColor: const Color(0xFF7D7D7D),
@@ -201,7 +201,15 @@ class BottomBar extends StatelessWidget{
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
                 ),
-                onPressed: () { debugPrint("Pressed Camera"); },
+                onPressed: () {
+                  debugPrint("Pressed QR");
+                  if(controller != null) {
+                    controller!.stopCamera();
+                  }
+                  Navigator.of(context).push(MaterialPageRoute(builder: (builder) {
+                    return const QRHomeScreen();
+                  }));
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: const [
