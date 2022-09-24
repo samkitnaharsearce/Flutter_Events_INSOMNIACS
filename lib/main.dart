@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'modules/splashScreen/splashScreen.dart';
 import 'components/molecules/tempMolecules.dart';
 
 void main(List<String> args) => runApp(MyApp());
@@ -16,7 +17,7 @@ class _MyAppState extends State<MyApp> {
         body: SizedBox(
           // width: MediaQuery.of(context).size.width,
           // height: MediaQuery.of(context).size.height,
-          child: QRHomePage()
+          child: const SplashScreen()
         ),
       ),
     );
