@@ -1,25 +1,23 @@
-import "package:flutter/material.dart";
-import 'modules/splashScreen/splashScreen.dart';
-import 'components/molecules/tempMolecules.dart';
+import 'package:flutter/material.dart';
+import './modules/splashScreen/splashScreen.dart';
+import './modules/ScanQR/screen/scanQRScreen.dart';
+import './components/molecules/tempMolecules.dart';
 
-void main(List<String> args) => runApp(MyApp());
-
-class MyApp extends StatefulWidget {
-  @override
-  State<MyApp> createState() => _MyAppState();
+void main() {
+  runApp(const MyApp());
 }
 
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: SizedBox(
-          // width: MediaQuery.of(context).size.width,
-          // height: MediaQuery.of(context).size.height,
-          child: const SplashScreen()
-        ),
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      home: const ScanQRScreen(),
     );
   }
 }
