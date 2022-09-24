@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import './modules/splashScreen/splashScreen.dart';
 import './modules/ScanQR/screen/scanQRScreen.dart';
+import './components/molecules/tempMolecules.dart';
 
 void main() {
   runApp(const MyApp());
