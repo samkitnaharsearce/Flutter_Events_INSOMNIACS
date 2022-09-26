@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:matrix/allUtilities.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -20,7 +19,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       String? status = await storage.read(key: "login_status");
       if (status != "true"){
         emit(const NewLogInState());
-        print("NewLogInState");
       }
       else{
         String? urn = await storage.read(key: "login_urn");
@@ -29,7 +27,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         String data = jsonEncode({"email":email,"linked_url":urn});
 
        emit(LoggedInState(qrData:data));
-       print("LoggedInState");
       }
     });
 

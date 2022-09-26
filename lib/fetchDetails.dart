@@ -4,7 +4,6 @@ import 'package:matrix/allUtilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-// import 'package:url_launcher/url_launcher.dart';
 
 class FetchDetails extends StatefulWidget {
   const FetchDetails({Key? key}) : super(key: key);
@@ -21,9 +20,7 @@ class _FetchDetailsState extends State<FetchDetails> {
   InAppWebViewController? webViewController;
   InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
       crossPlatform: InAppWebViewOptions(
-        // clearCache: true,
         javaScriptCanOpenWindowsAutomatically: true,
-        // userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36",
         userAgent: "random",
         useShouldOverrideUrlLoading: true,
         mediaPlaybackRequiresUserGesture: false,
@@ -67,7 +64,6 @@ class _FetchDetailsState extends State<FetchDetails> {
         webViewController = controller;
       },
       onCreateWindow: (controller, createWindowAction) async {
-        print("onCreateWindow");
 
         showDialog(
           context: context,
@@ -79,7 +75,6 @@ class _FetchDetailsState extends State<FetchDetails> {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 0.5,
                   child: InAppWebView(
-                    // Setting the windowId property is important here!
                     windowId: createWindowAction.windowId,
                     initialOptions: InAppWebViewGroupOptions(
                       crossPlatform: InAppWebViewOptions(
@@ -90,10 +85,8 @@ class _FetchDetailsState extends State<FetchDetails> {
                     ),
                     onWebViewCreated: (InAppWebViewController controller) {},
                     onLoadStart: (InAppWebViewController controller, url) {
-                      print("onLoadStart popup $url");
                     },
                     onLoadStop: (InAppWebViewController controller, url) {
-                      print("onLoadStop popup $url");
                     },
                   ),
                 ),
@@ -121,14 +114,6 @@ class _FetchDetailsState extends State<FetchDetails> {
 
         if (!["http", "https", "file", "chrome", "data", "javascript", "about"]
             .contains(uri.scheme)) {
-          // if (await canLaunchUrl(uri)) {
-          //   // Launch the App
-          //   await launchUrl(
-          //     uri,
-          //   );
-          //   // and cancel the request
-          //   return NavigationActionPolicy.CANCEL;
-          // }
         }
 
         return NavigationActionPolicy.ALLOW;
@@ -138,7 +123,6 @@ class _FetchDetailsState extends State<FetchDetails> {
         setState(() {
           url1 = url.toString();
           urlController.text = url1;
-          // webViewController!.loadUrl(urlRequest: URLRequest(url: Uri.parse("https://www.linkedin.com/mypreferences/d/categories/sign-in-and-security")));
         });
       },
       onLoadError: (controller, url, code, message) {
@@ -154,13 +138,6 @@ class _FetchDetailsState extends State<FetchDetails> {
           urlController.text = url1;
         });
 
-        // if (urlController.text  == "https://www.linkedin.com/feed/") {
-        //   webViewController!.loadUrl(urlRequest: URLRequest(url: Uri.parse("https://www.linkedin.com/psettings/email?li_theme=dark&openInMobileMode=true")));
-        //   Navigator.push(context,MaterialPageRoute(builder: (context){
-        //     return hiddenLogin();
-        //   }));
-        // }
-
         if (urlController.text ==
                 "https://www.linkedin.com/psettings/email?li_theme=dark&openInMobileMode=false" &&
             progress == 100) {
@@ -173,9 +150,7 @@ class _FetchDetailsState extends State<FetchDetails> {
               multiLine: true,
             );
             List matches = regExp.allMatches(htmlResponse.toString()).toList();
-            print(matches.length);
             for (var i = 0; i < matches.length; i++) {
-              print(matches[i].group(0));
               storage.write(
                   key: "login_email", value: "${matches[i].group(0)}");
               setState(() {
@@ -192,7 +167,6 @@ class _FetchDetailsState extends State<FetchDetails> {
             var urn = await webViewController!.evaluateJavascript(
                 source:
                     '''document.querySelectorAll("span[data-js-module-id=vanity-name__display-name]")[0].innerHTML;''');
-            print(urn);
             storage.write(
                 key: "login_urn", value: "https://www.linkedin.com/in/$urn");
 
@@ -214,7 +188,6 @@ class _FetchDetailsState extends State<FetchDetails> {
         });
       },
       onConsoleMessage: (controller, consoleMessage) {
-        debugPrint(consoleMessage.toString());
       },
     );
   }
@@ -263,7 +236,6 @@ class _FetchDetailsState extends State<FetchDetails> {
                                 ),
                               ),
                               onPressed: () async {
-                                print("Pressed Finish Login");
 
                                 await headlessWebView?.dispose();
                                 await headlessWebView?.run();

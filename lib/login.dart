@@ -85,7 +85,6 @@ class _LoginState extends State<Login> {
                   webViewController?.loadUrl(
                       urlRequest: URLRequest(url: url));
                   dynamic x = await webViewController?.getUrl();
-                  debugPrint(x.toString());
                 },
               ),
               Expanded(
@@ -103,7 +102,6 @@ class _LoginState extends State<Login> {
 
                       onCreateWindow: (controller, createWindowAction) async {
 
-                        print("onCreateWindow");
 
                         showDialog(
                           context: context,
@@ -128,10 +126,8 @@ class _LoginState extends State<Login> {
                                       dynamic _webViewPopupController = controller;
                                     },
                                     onLoadStart: (InAppWebViewController controller, url) {
-                                      print("onLoadStart popup $url");
                                     },
                                     onLoadStop: (InAppWebViewController controller, url) {
-                                      print("onLoadStop popup $url");
                                     },
                                   ),
                                 ),
@@ -159,14 +155,6 @@ class _LoginState extends State<Login> {
 
                         if (![ "http", "https", "file", "chrome",
                           "data", "javascript", "about"].contains(uri.scheme)) {
-                          // if (await canLaunch(url)) {
-                          //   // Launch the App
-                          //   await launch(
-                          //     url,
-                          //   );
-                          //   // and cancel the request
-                          //   return NavigationActionPolicy.CANCEL;
-                          // }
                         }
 
                         return NavigationActionPolicy.ALLOW;
@@ -200,30 +188,6 @@ class _LoginState extends State<Login> {
                             return FetchDetails();
                           }));
                         }
-
-
-                        // if (urlController.text  == "https://www.linkedin.com/psettings/email?li_theme=dark&openInMobileMode=true" && progress == 100) {
-                        //   dynamic htmlResponse = "";
-                        //
-                        //   Future.delayed(Duration(microseconds: 1),() async{
-                        //     htmlResponse = await webViewController!.getHtml();
-                        //     RegExp regExp = new RegExp(
-                        //       r'[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+',
-                        //       multiLine: true,
-                        //     );
-                        //     List matches = regExp.allMatches(htmlResponse.toString()).toList();
-                        //     print(matches.length);
-                        //     for (var i=0; i<matches.length;i++){
-                        //       print(matches[i].group(0));
-                        //     }
-                        //   });
-                        //
-                        //   webViewController!.loadUrl(urlRequest: URLRequest(url: Uri.parse("https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile")));
-                        //   Future.delayed(Duration(seconds: 1),() async{
-                        //     var x = await webViewController!.evaluateJavascript(source: '''document.querySelectorAll("span[data-js-module-id=vanity-name__display-name]")[0].innerHTML;''');
-                        //     print(x);
-                        //   });
-                        // }
                       },
 
 
@@ -234,7 +198,6 @@ class _LoginState extends State<Login> {
                         });
                       },
                       onConsoleMessage: (controller, consoleMessage) {
-                        print(consoleMessage);
                       },
                     ),
                     progress < 1.0

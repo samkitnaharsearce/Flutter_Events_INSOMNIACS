@@ -40,17 +40,12 @@ class _ScannerPageState extends State<ScannerPage> {
     qrController?.scannedDataStream.listen((data) async{
       setState(() {
         qrData = data;
-        print(qrData!.code);
       });
 
       dynamic decodeData = json.decode(data.code.toString());
       String receiverEmail = decodeData["email"];
       String receiverLinkedInurl = decodeData["linked_url"];
       qrController!.pauseCamera();
-
-      // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) {
-      //   return OpenProfile(sourceLink: receiverLinkedInurl);
-      // }), (route) => false);
 
       Future.delayed(Duration(seconds: 4),(){
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
@@ -59,8 +54,6 @@ class _ScannerPageState extends State<ScannerPage> {
       });
 
       await SendEmail(receiverEmail);
-
-      // Navigator.of(context).pushNamedAndRemoveUntil("/", (route) => false);
     });
   }
 

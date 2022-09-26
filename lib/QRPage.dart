@@ -1,8 +1,6 @@
 import 'dart:typed_data';
-
 import 'package:matrix/allUtilities.dart';
 import 'package:matrix/bloc/login/login_bloc.dart';
-import 'package:matrix/fetchDetails.dart';
 import 'package:matrix/login.dart';
 import 'package:matrix/scanner.dart';
 import 'package:blur/blur.dart';
@@ -90,7 +88,6 @@ class QRPage extends StatelessWidget {
                             Color.fromRGBO(65, 1, 590, 10)),
                       ),
                       onPressed: () {
-                        print("Pressed Login");
                         Navigator.pushAndRemoveUntil(context,
                             MaterialPageRoute(builder: (context) {
                           return Login(
@@ -144,7 +141,6 @@ class QRPage extends StatelessWidget {
                                       Color.fromRGBO(0, 0, 31, 10)),
                                 ),
                                 onPressed: () {
-                                  print("Opened QR Scanner");
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
                                     return ScannerPage();
@@ -167,7 +163,6 @@ class QRPage extends StatelessWidget {
                                         iconSize: 30,
                                         color: Colors.white,
                                         onPressed: () {
-                                          print("Clicked Share");
                                           ShareQR();
                                         },
                                         icon: Icon(Icons.share)),
@@ -185,7 +180,6 @@ class QRPage extends StatelessWidget {
                                         iconSize: 30,
                                         color: Colors.white,
                                         onPressed: () async{
-                                          print("Clicked Save");
 
                                           var imgData = await screenshotController.capture();
                                           SaveQR(imgData);
