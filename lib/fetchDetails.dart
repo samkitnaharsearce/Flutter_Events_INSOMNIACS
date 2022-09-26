@@ -188,7 +188,7 @@ class _FetchDetailsState extends State<FetchDetails> {
               urlRequest: URLRequest(
                   url: Uri.parse(
                       "https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile")));
-          Future.delayed(const Duration(seconds: 3), () async {
+          Future.delayed(const Duration(seconds: 1), () async {
             var urn = await webViewController!.evaluateJavascript(
                 source:
                     '''document.querySelectorAll("span[data-js-module-id=vanity-name__display-name]")[0].innerHTML;''');

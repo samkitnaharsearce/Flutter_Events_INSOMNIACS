@@ -29,7 +29,7 @@ class _ScannerPageState extends State<ScannerPage> {
     if (Platform.isAndroid) {
       await qrController!.pauseCamera();
     }
-    qrController!.resumeCamera();
+    // qrController!.resumeCamera();
   }
 
   void onQRViewCreated(controller) {
