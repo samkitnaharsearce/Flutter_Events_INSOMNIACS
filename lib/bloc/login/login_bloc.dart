@@ -37,6 +37,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       storage.write(key: "login_status", value: "true");
     });
 
+    on<ShowAppLinkQrEvent>((event, emit) async{
+      emit(ShowAppLinkQrState(appLink: event.appLink));
+    });
+
 
 
   }

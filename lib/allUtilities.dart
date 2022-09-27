@@ -14,14 +14,14 @@ SendEmail(receiverEmail,receiverLinkedInurl) async{
   final receiversMessage = Message()
     ..from = Address(username,"Matrix App")
     ..recipients.add(receiverEmail)
-    ..subject = 'You Have A new Connection Request through Matrix App:: 😀 :: ${DateTime.now()}'
-    ..html = "<h1>Hello</h1>\n<p>You have got a new connection request from $senderLinkedInUrl</p>";
+    ..subject = 'Scanned Alert! ${DateTime.now()}'
+    ..html = "<h1>Hello</h1>\n<p>Your LinkedIn profile has been visited by $senderLinkedInUrl through Matrix App</p>";
 
   final sendersMessage = Message()
     ..from = Address(username,"Matrix App")
     ..recipients.add(await storage.read(key:"login_email"))
-    ..subject = 'You Have Successfully Sent the request through Matrix App:: 😀 :: ${DateTime.now()}'
-    ..html = "<h1>Hello</h1>\n<p>Hey! You have sent the connection request to $receiverLinkedInurl</p>";
+    ..subject = 'Scanning Alert! at ${DateTime.now()}'
+    ..html = "<h1>Hello</h1>\n<p>You have scanned Matrix QR and visted $receiverLinkedInurl</p>";
 
   try {
     var connection = PersistentConnection(smtpServer);

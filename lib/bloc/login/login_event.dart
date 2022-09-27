@@ -41,3 +41,18 @@ class SuccessfulLoginEvent implements LoginEvent{
 
 }
 
+class ShowAppLinkQrEvent implements LoginEvent{
+  final String appLink;
+
+  const ShowAppLinkQrEvent({required this.appLink});
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+
+  @override
+  // TODO: implement stringify
+  bool? get stringify => throw UnimplementedError();
+
+}
+

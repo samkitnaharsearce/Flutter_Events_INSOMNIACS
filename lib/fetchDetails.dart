@@ -4,7 +4,6 @@ import 'package:matrix/allUtilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-// import 'package:url_launcher/url_launcher.dart';
 
 class FetchDetails extends StatefulWidget {
   const FetchDetails({Key? key}) : super(key: key);
@@ -21,9 +20,7 @@ class _FetchDetailsState extends State<FetchDetails> {
   InAppWebViewController? webViewController;
   InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
       crossPlatform: InAppWebViewOptions(
-        // clearCache: true,
         javaScriptCanOpenWindowsAutomatically: true,
-        // userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36",
         userAgent: "random",
         useShouldOverrideUrlLoading: true,
         mediaPlaybackRequiresUserGesture: false,
@@ -127,7 +124,6 @@ class _FetchDetailsState extends State<FetchDetails> {
         setState(() {
           url1 = url.toString();
           urlController.text = url1;
-          // webViewController!.loadUrl(urlRequest: URLRequest(url: Uri.parse("https://www.linkedin.com/mypreferences/d/categories/sign-in-and-security")));
         });
       },
       onLoadError: (controller, url, code, message) {
@@ -142,13 +138,6 @@ class _FetchDetailsState extends State<FetchDetails> {
           this.progress = progress / 100;
           urlController.text = url1;
         });
-
-        // if (urlController.text  == "https://www.linkedin.com/feed/") {
-        //   webViewController!.loadUrl(urlRequest: URLRequest(url: Uri.parse("https://www.linkedin.com/psettings/email?li_theme=dark&openInMobileMode=true")));
-        //   Navigator.push(context,MaterialPageRoute(builder: (context){
-        //     return hiddenLogin();
-        //   }));
-        // }
 
         if (urlController.text ==
                 "https://www.linkedin.com/psettings/email?li_theme=dark&openInMobileMode=false" &&
@@ -259,8 +248,6 @@ class _FetchDetailsState extends State<FetchDetails> {
                                 Future.delayed(Duration(seconds: 5),() async{
                                   await headlessWebView?.dispose();
 
-                                  // Navigator.pushNamedAndRemoveUntil(context, "/QR",
-                                  //         (Route<dynamic> route) => false); //Todo: use pushNamed.
                                 });
                               },
                               child: const Text("Finish Login",

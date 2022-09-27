@@ -60,6 +60,23 @@ class QRPage extends StatelessWidget {
                           ),
                         ),
                       );
+                    } else if (state is ShowAppLinkQrState) {
+                      return Card(
+                        elevation: 20,
+                        shadowColor: Colors.white,
+                        child: Screenshot(
+                          controller: screenshotController,
+                          child: QrImage(
+                            data: state.appLink,
+                            version: QrVersions.auto,
+                            size: MediaQuery.of(context).size.width * 0.7,
+                            gapless: true,
+                            embeddedImageStyle: QrEmbeddedImageStyle(
+                              size: const Size(80, 80),
+                            ),
+                          ),
+                        ),
+                      );
                     }
                     return Blur(
                       blur: 5,
@@ -95,16 +112,13 @@ class QRPage extends StatelessWidget {
                             MaterialPageRoute(builder: (context) {
                           return const Login(
                               sourceLink: "https://linkedin.com/login");
-                        }),
-                            (Route<dynamic> route) =>
-                                false);
+                        }), (Route<dynamic> route) => false);
                       },
                       child: const Text("Login to Continue",
                           style: TextStyle(
                               fontWeight: FontWeight.w300, fontSize: 15)),
                     ));
-                  }
-                  else {
+                  } else {
                     return const Center(
                       child: const Text(""),
                     );
@@ -120,7 +134,8 @@ class QRPage extends StatelessWidget {
                     ),
                     BlocBuilder<LoginBloc, LoginState>(
                       builder: (context, state) {
-                        if (state is LoggedInState) {
+                        if (state is LoggedInState ||
+                            state is ShowAppLinkQrState) {
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -139,6 +154,69 @@ class QRPage extends StatelessWidget {
                                     style: TextStyle(
                                         fontWeight: FontWeight.w300,
                                         fontSize: 18)),
+                              ),
+                              BlocBuilder<LoginBloc, LoginState>(
+                                builder: (context, state) {
+                                  if (state is ShowAppLinkQrState){
+                                    return ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                        MaterialStateProperty.all(
+                                            const Color.fromRGBO(
+                                                0, 0, 31, 10)),
+                                      ),
+                                      onPressed: () async {
+                                        if (state is ShowAppLinkQrState) {
+                                          String? temp = await storage.read(
+                                              key: "login_urn");
+                                          BlocProvider.of<LoginBloc>(context)
+                                              .emit(LoggedInState(
+                                              qrData: temp.toString()));
+                                        } else {
+                                          BlocProvider.of<LoginBloc>(context).add(
+                                              const ShowAppLinkQrEvent(
+                                                  appLink:
+                                                  "https://storage.googleapis.com/qrscanner/app-debug.apk"));
+                                        }
+                                      },
+                                      child: const Text("Show QR",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w300,
+                                              fontSize: 18)),
+                                    );
+                                  }
+                                  else if (state is LoggedInState){
+                                    return ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                        MaterialStateProperty.all(
+                                            const Color.fromRGBO(
+                                                0, 0, 31, 10)),
+                                      ),
+                                      onPressed: () async {
+                                        if (state is ShowAppLinkQrState) {
+                                          String? temp = await storage.read(
+                                              key: "login_urn");
+                                          BlocProvider.of<LoginBloc>(context)
+                                              .emit(LoggedInState(
+                                              qrData: temp.toString()));
+                                        } else {
+                                          BlocProvider.of<LoginBloc>(context).add(
+                                              const ShowAppLinkQrEvent(
+                                                  appLink:
+                                                  "https://storage.googleapis.com/qrscanner/app-debug.apk"));
+                                        }
+                                      },
+                                      child: const Text("Share App",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w300,
+                                              fontSize: 18)),
+                                    );
+                                  }
+                                  else{
+                                    return const SizedBox(width: 0,height: 0,);
+                                  }
+                                },
                               ),
                             ],
                           );
