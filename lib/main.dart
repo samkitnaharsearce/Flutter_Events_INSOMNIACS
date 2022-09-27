@@ -1,22 +1,24 @@
+import 'dart:async';
+import 'dart:io';
+import 'package:matrix/QRPage.dart';
+import 'package:matrix/fetchDetails.dart';
+import 'package:matrix/scanner.dart';
 import 'package:flutter/material.dart';
-import 'modules/splashScreen/screen/splashScreen.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const SplashScreen(),
-    );
+  if (Platform.isAndroid) {
+    await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
+
+  runApp(MaterialApp(
+    routes: {
+      "/QR" : (context) => QRPage(),
+      "/fetchDetails" : (context) => FetchDetails(),
+      "/scanner" : (context) => ScannerPage(),
+    },
+      home: new QRPage()
+  ));
 }
