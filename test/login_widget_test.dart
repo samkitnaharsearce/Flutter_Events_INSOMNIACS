@@ -13,7 +13,6 @@ void main() {
       home: Login(sourceLink: "https://linkedin.com/login"),
     ));
 
-    // await tester.pumpAndSettle();
     expect(find.byType(Login), findsOneWidget);
 
   });

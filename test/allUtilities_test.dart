@@ -28,18 +28,10 @@ void main() {
   group('allUtilities Test', (){
 
     test("Verify read returns values when login_status = 'true'. ", () {
-
-      // when(MockPersistentConnection().send(msg)).thenAnswer((_) => Future.value(SendReport(msg, now, now, now)));
-
       Future<bool> ret = SendEmail("mawaris99@gmail.com", "www.linkedin.com", "mabdulwaris99@gmail.com", "www.linkedin.com");
       print(ret);
       expect(ret, Future<bool>.value(false));
 
     });
-
-    // testWidgets("allUtilitities widget test description", (widgetTester) {
-    //
-    // });
-
   });
 }

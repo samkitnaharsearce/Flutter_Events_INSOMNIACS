@@ -21,7 +21,5 @@ void main() {
     await tester.tap(elevatedButton);
     await tester.pumpAndSettle(const Duration(seconds: 5));
 
-    //tester.allWidgets.forEach((element) {print(element.toString());});
-
   });
 }

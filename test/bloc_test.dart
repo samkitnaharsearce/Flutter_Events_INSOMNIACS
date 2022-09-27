@@ -28,20 +28,6 @@ void main(){
       expect("true", service.read(key: "dummy"));
       verify(storeMock.read(key: 'login_status')).called(1);
     });
-    //
-    // blocTest<LoginBloc, LoginState>(
-    //   'emits [] when nothing is added',
-    //   build: () => LoginBloc(),
-    //   expect: () => [],
-    // );
-    //
-    // blocTest<LoginBloc, LoginState>(
-    //   'emits [1] when IsLoggedInEvent is added',
-    //   build: () => LoginBloc(),
-    //   act: (bloc) => bloc.add(IsLoggedInEvent()),
-    //   expect: () => [],
-    // );
-
     blocTest<LoginBloc, LoginState>(
       'Emits EndingLoginState when EndingLoginEvent is added',
       build: () => LoginBloc(),

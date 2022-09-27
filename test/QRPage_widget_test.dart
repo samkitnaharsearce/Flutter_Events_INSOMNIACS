@@ -23,12 +23,6 @@ void main() {
 
     whenListen(mockBlock, Stream.fromIterable([LoginInitial(), NewLogInState()/*const LoggedInState(qrData: '{"urn":"www.123movies.com","email":"waris69@gmail.com"')*/]));
 
-    // await tester.pumpWidget(MaterialApp(
-    //   home: BlocProvider(
-    //           create: (context) => LoginBloc()..add(const EndingLoginEvent()),
-    //           child: QRPage(),
-    //         ),
-    // ));
     await tester.pumpWidget(MaterialApp(
         routes: {
           "/QR" : (context) => QRPage(),
@@ -42,14 +36,6 @@ void main() {
 
     whenListen(mockBlock, Stream.fromIterable([NewLogInState()]), initialState: LoginInitial());
     expect(mockBlock.state, equals(LoginInitial()));
-
-    // var state = tester.state(find.byType(QRPage));
-    // print("My state: $state");
-    // await tester.pumpAndSettle();
-
-    // when(() => mockBlock.state).thenReturn(
-    //   LoggedInState(qrData: '{"urn":"www.123movies.com","email":"waris69@gmail.com"') // the desired state
-    // );
 
     // Assert that the stubbed stream is emitted.
     await expectLater(mockBlock.stream, emitsInOrder([NewLogInState(), LoggedInState(qrData: "waris")]));
@@ -67,10 +53,7 @@ void main() {
     // await tester.pump();
 
     expect(find.byType(Card), findsOneWidget);
-    // expect(find.byType(ElevatedButton), findsOneWidget);
-
     tester.allWidgets.forEach((element) {print(element);});
 
-    // expect(find.text("Login to Continue"), findsOneWidget);
   });
 }
