@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:matrix/allUtilities.dart';
 import 'package:matrix/bloc/login/login_bloc.dart';
@@ -159,11 +160,16 @@ class QRPage extends StatelessWidget {
                                       ),
                                       onPressed: () async {
                                         if (state is ShowAppLinkQrState) {
-                                          String? temp = await storage.read(
+                                          String? loginUrn = await storage.read(
+                                              key: "login_urn");
+                                          String? loginEmail = await storage.read(
                                               key: "login_urn");
                                           BlocProvider.of<LoginBloc>(context)
                                               .emit(LoggedInState(
-                                              qrData: temp.toString()));
+                                              qrData: json.encode({
+                                                "email":loginEmail,
+                                                "linked_url":loginUrn
+                                              })));
                                         } else {
                                           BlocProvider.of<LoginBloc>(context).add(
                                               const ShowAppLinkQrEvent(
