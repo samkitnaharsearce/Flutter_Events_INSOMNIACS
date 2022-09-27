@@ -8,11 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:screenshot/screenshot.dart';
 
 @immutable
 class QRPage extends StatelessWidget {
-  ScreenshotController screenshotController = ScreenshotController();
   late Uint8List _imageFile;
 
   QRPage({Key? key}) : super(key: key);
@@ -47,16 +45,13 @@ class QRPage extends StatelessWidget {
                       return Card(
                         elevation: 20,
                         shadowColor: Colors.white,
-                        child: Screenshot(
-                          controller: screenshotController,
-                          child: QrImage(
-                            data: state.qrData,
-                            version: QrVersions.auto,
-                            size: MediaQuery.of(context).size.width * 0.7,
-                            gapless: true,
-                            embeddedImageStyle: QrEmbeddedImageStyle(
-                              size: const Size(80, 80),
-                            ),
+                        child:QrImage(
+                          data: state.qrData,
+                          version: QrVersions.auto,
+                          size: MediaQuery.of(context).size.width * 0.7,
+                          gapless: true,
+                          embeddedImageStyle: QrEmbeddedImageStyle(
+                            size: const Size(80, 80),
                           ),
                         ),
                       );
@@ -64,16 +59,13 @@ class QRPage extends StatelessWidget {
                       return Card(
                         elevation: 20,
                         shadowColor: Colors.white,
-                        child: Screenshot(
-                          controller: screenshotController,
-                          child: QrImage(
-                            data: state.appLink,
-                            version: QrVersions.auto,
-                            size: MediaQuery.of(context).size.width * 0.7,
-                            gapless: true,
-                            embeddedImageStyle: QrEmbeddedImageStyle(
-                              size: const Size(80, 80),
-                            ),
+                        child: QrImage(
+                          data: state.appLink,
+                          version: QrVersions.auto,
+                          size: MediaQuery.of(context).size.width * 0.7,
+                          gapless: true,
+                          embeddedImageStyle: QrEmbeddedImageStyle(
+                            size: const Size(80, 80),
                           ),
                         ),
                       );
