@@ -14,17 +14,17 @@ import 'package:qr_flutter/qr_flutter.dart';
 class QRPage extends StatelessWidget {
   late Uint8List _imageFile;
 
-  QRPage({Key? key}) : super(key: key);
 
-  void cameraAccess() async {
-    while (Permission.camera.status != true) {
-      await Permission.camera.request();
-    }
-  }
+  QRPage({Key? key}) : super(key: key);
+  // void cameraAccess() async {
+  //   while (Permission.camera.status != true) {
+  //     await Permission.camera.request();
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    cameraAccess();
+    // cameraAccess();
     return Scaffold(
       body: BlocProvider(
         create: (context) => LoginBloc()..add(IsLoggedInEvent()),

@@ -9,46 +9,31 @@ class LoginInitial extends LoginState {
   List<Object> get props => [];
 }
 
-class LoggedInState implements LoginState{
+class LoggedInState extends Equatable implements LoginState{
   final String qrData;
 
-  LoggedInState({required this.qrData});
+  const LoggedInState({required this.qrData});
 
   @override
   // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
-
-  @override
-  // TODO: implement stringify
-  bool? get stringify => throw UnimplementedError();
-
+  List<Object?> get props => [qrData];
 }
 
 
-class NewLogInState implements LoginState{
+class NewLogInState extends Equatable implements LoginState{
   const NewLogInState();
 
   @override
   // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
-
-  @override
-  // TODO: implement stringify
-  bool? get stringify => throw UnimplementedError();
-
+  List<Object?> get props => [];
 }
 
-class EndingLoginState implements LoginState{
+class EndingLoginState extends Equatable implements LoginState {
   const EndingLoginState();
 
   @override
   // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
-
-  @override
-  // TODO: implement stringify
-  bool? get stringify => throw UnimplementedError();
-
+  List<Object?> get props => [];
 }
 
 class ShowAppLinkQrState implements LoginState{

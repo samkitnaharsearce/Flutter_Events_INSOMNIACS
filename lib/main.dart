@@ -6,12 +6,14 @@ import 'package:matrix/scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-Future main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (Platform.isAndroid) {
-    await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
-  }
+  // if (Platform.isAndroid) {
+  //   await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
+  // }
+
+  setDebuggingEnabled(true);
 
   runApp(MaterialApp(
     routes: {
@@ -21,4 +23,10 @@ Future main() async {
     },
       home: new QRPage()
   ));
+}
+
+Future<void> setDebuggingEnabled(bool value) async {
+  if (Platform.isAndroid) {
+    await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(value);
+  }
 }
