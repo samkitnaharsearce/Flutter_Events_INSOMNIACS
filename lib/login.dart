@@ -22,7 +22,6 @@ class _LoginState extends State<Login> {
   InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
       crossPlatform: InAppWebViewOptions(
         javaScriptCanOpenWindowsAutomatically: true,
-        // userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36",
         userAgent: "random",
         useShouldOverrideUrlLoading: true,
         mediaPlaybackRequiresUserGesture: false,
@@ -101,8 +100,6 @@ class _LoginState extends State<Login> {
                       },
 
                       onCreateWindow: (controller, createWindowAction) async {
-
-
                         showDialog(
                           context: context,
                           builder: (context) {
@@ -155,6 +152,7 @@ class _LoginState extends State<Login> {
 
                         if (![ "http", "https", "file", "chrome",
                           "data", "javascript", "about"].contains(uri.scheme)) {
+
                         }
 
                         return NavigationActionPolicy.ALLOW;
@@ -164,7 +162,6 @@ class _LoginState extends State<Login> {
                         setState(() {
                           this.url = url.toString();
                           urlController.text = this.url;
-                          // webViewController!.loadUrl(urlRequest: URLRequest(url: Uri.parse("https://www.linkedin.com/mypreferences/d/categories/sign-in-and-security")));
                         });
 
                       },
@@ -183,7 +180,6 @@ class _LoginState extends State<Login> {
 
                         if (urlController.text  == "https://www.linkedin.com/feed/") {
                           webViewController!.loadUrl(urlRequest: URLRequest(url: Uri.parse("https://www.linkedin.com/psettings/email?li_theme=dark&openInMobileMode=true")));
-                          // dispose();
                         Navigator.push(context,MaterialPageRoute(builder: (context){
                             return FetchDetails();
                           }));

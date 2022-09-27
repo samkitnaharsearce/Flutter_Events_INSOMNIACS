@@ -10,9 +10,12 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:screenshot/screenshot.dart';
 
+@immutable
 class QRPage extends StatelessWidget {
   ScreenshotController screenshotController = ScreenshotController();
   late Uint8List _imageFile;
+
+  QRPage({Key? key}) : super(key: key);
 
   void cameraAccess() async {
     while (Permission.camera.status != true) {
@@ -85,36 +88,22 @@ class QRPage extends StatelessWidget {
                         child: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
-                            Color.fromRGBO(65, 1, 590, 10)),
+                            const Color.fromRGBO(65, 1, 590, 10)),
                       ),
                       onPressed: () {
                         Navigator.pushAndRemoveUntil(context,
                             MaterialPageRoute(builder: (context) {
-                          return Login(
+                          return const Login(
                               sourceLink: "https://linkedin.com/login");
                         }),
                             (Route<dynamic> route) =>
-                                false); //Todo: use pushNamed.
+                                false);
                       },
                       child: const Text("Login to Continue",
                           style: TextStyle(
                               fontWeight: FontWeight.w300, fontSize: 15)),
                     ));
                   }
-                  // else if (state is LoggedInState) {
-                  //   return Center(
-                  //     child: Container(
-                  //       decoration: const BoxDecoration(
-                  //           borderRadius: BorderRadius.all(Radius.circular(80)),
-                  //           color: Colors.white),
-                  //       child: const Icon(
-                  //         Icons.add_circle,
-                  //         color: Colors.purple,
-                  //         size: 70,
-                  //       ),
-                  //     ),
-                  //   );
-                  // }
                   else {
                     return const Center(
                       child: const Text(""),
@@ -138,7 +127,7 @@ class QRPage extends StatelessWidget {
                               ElevatedButton(
                                 style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
-                                      Color.fromRGBO(0, 0, 31, 10)),
+                                      const Color.fromRGBO(0, 0, 31, 10)),
                                 ),
                                 onPressed: () {
                                   Navigator.push(context,
@@ -151,51 +140,10 @@ class QRPage extends StatelessWidget {
                                         fontWeight: FontWeight.w300,
                                         fontSize: 18)),
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(50)),
-                                        color: Color.fromRGBO(0, 0, 31, 10)),
-                                    child: IconButton(
-                                        iconSize: 30,
-                                        color: Colors.white,
-                                        onPressed: () {
-                                          ShareQR();
-                                        },
-                                        icon: Icon(Icons.share)),
-                                  ),
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.1,
-                                  ),
-                                  Container(
-                                    decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(50)),
-                                        color: Color.fromRGBO(0, 0, 31, 10)),
-                                    child: IconButton(
-                                        iconSize: 30,
-                                        color: Colors.white,
-                                        onPressed: () async{
-
-                                          var imgData = await screenshotController.capture();
-                                          SaveQR(imgData);
-
-
-
-
-                                        },
-                                        icon: Icon(Icons.save)),
-                                  )
-                                ],
-                              ),
                             ],
                           );
                         } else {
-                          return SizedBox(
+                          return const SizedBox(
                             width: 0,
                             height: 0,
                           );

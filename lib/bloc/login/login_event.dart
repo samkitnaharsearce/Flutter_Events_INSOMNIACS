@@ -15,20 +15,6 @@ class IsLoggedInEvent implements LoginEvent{
 
 }
 
-class SaveEmailEvent implements LoginEvent{
-  final String email;
-
-  const SaveEmailEvent({required this.email});
-
-  @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
-
-  @override
-  // TODO: implement stringify
-  bool? get stringify => throw UnimplementedError();
-
-}
 
 class EndingLoginEvent implements LoginEvent{
   const EndingLoginEvent();
@@ -44,21 +30,6 @@ class EndingLoginEvent implements LoginEvent{
 }
 
 class SuccessfulLoginEvent implements LoginEvent{
-
-  @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
-
-  @override
-  // TODO: implement stringify
-  bool? get stringify => throw UnimplementedError();
-
-}
-
-class ConnectEvent implements LoginEvent{
-  final dynamic data;
-
-  const ConnectEvent({required this.data});
 
   @override
   // TODO: implement props

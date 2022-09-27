@@ -29,7 +29,6 @@ class _ScannerPageState extends State<ScannerPage> {
     if (Platform.isAndroid) {
       await qrController!.pauseCamera();
     }
-    // qrController!.resumeCamera();
   }
 
   void onQRViewCreated(controller) {
@@ -47,13 +46,13 @@ class _ScannerPageState extends State<ScannerPage> {
       String receiverLinkedInurl = decodeData["linked_url"];
       qrController!.pauseCamera();
 
-      Future.delayed(Duration(seconds: 4),(){
+      Future.delayed(Duration(seconds: 0),(){
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
           return Login(sourceLink: receiverLinkedInurl);
         }));
       });
 
-      await SendEmail(receiverEmail);
+      await SendEmail(receiverEmail,receiverLinkedInurl);
     });
   }
 

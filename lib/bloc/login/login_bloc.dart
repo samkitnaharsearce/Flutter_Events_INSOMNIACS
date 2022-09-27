@@ -11,10 +11,6 @@ part 'login_state.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(LoginInitial()) {
 
-    on<ConnectEvent>((event, emit) async{
-      SendEmail(event.data);
-    });
-
     on<IsLoggedInEvent>((event, emit) async{
       String? status = await storage.read(key: "login_status");
       if (status != "true"){
