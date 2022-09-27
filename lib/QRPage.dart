@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:matrix/allUtilities.dart';
 import 'package:matrix/bloc/login/login_bloc.dart';
@@ -8,11 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:screenshot/screenshot.dart';
 
 @immutable
 class QRPage extends StatelessWidget {
-  ScreenshotController screenshotController = ScreenshotController();
   late Uint8List _imageFile;
 
 
@@ -47,16 +46,13 @@ class QRPage extends StatelessWidget {
                       return Card(
                         elevation: 20,
                         shadowColor: Colors.white,
-                        child: Screenshot(
-                          controller: screenshotController,
-                          child: QrImage(
-                            data: state.qrData,
-                            version: QrVersions.auto,
-                            size: MediaQuery.of(context).size.width * 0.7,
-                            gapless: true,
-                            embeddedImageStyle: QrEmbeddedImageStyle(
-                              size: const Size(80, 80),
-                            ),
+                        child:QrImage(
+                          data: state.qrData,
+                          version: QrVersions.auto,
+                          size: MediaQuery.of(context).size.width * 0.7,
+                          gapless: true,
+                          embeddedImageStyle: QrEmbeddedImageStyle(
+                            size: const Size(80, 80),
                           ),
                         ),
                       );
@@ -64,16 +60,13 @@ class QRPage extends StatelessWidget {
                       return Card(
                         elevation: 20,
                         shadowColor: Colors.white,
-                        child: Screenshot(
-                          controller: screenshotController,
-                          child: QrImage(
-                            data: state.appLink,
-                            version: QrVersions.auto,
-                            size: MediaQuery.of(context).size.width * 0.7,
-                            gapless: true,
-                            embeddedImageStyle: QrEmbeddedImageStyle(
-                              size: const Size(80, 80),
-                            ),
+                        child: QrImage(
+                          data: state.appLink,
+                          version: QrVersions.auto,
+                          size: MediaQuery.of(context).size.width * 0.7,
+                          gapless: true,
+                          embeddedImageStyle: QrEmbeddedImageStyle(
+                            size: const Size(80, 80),
                           ),
                         ),
                       );
@@ -167,11 +160,16 @@ class QRPage extends StatelessWidget {
                                       ),
                                       onPressed: () async {
                                         if (state is ShowAppLinkQrState) {
-                                          String? temp = await storage.read(
+                                          String? loginUrn = await storage.read(
+                                              key: "login_urn");
+                                          String? loginEmail = await storage.read(
                                               key: "login_urn");
                                           BlocProvider.of<LoginBloc>(context)
                                               .emit(LoggedInState(
-                                              qrData: temp.toString()));
+                                              qrData: json.encode({
+                                                "email":loginEmail,
+                                                "linked_url":loginUrn
+                                              })));
                                         } else {
                                           BlocProvider.of<LoginBloc>(context).add(
                                               const ShowAppLinkQrEvent(
