@@ -75,7 +75,6 @@ class _FetchDetailsState extends State<FetchDetails> {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 0.5,
                   child: InAppWebView(
-                    // Setting the windowId property is important here!
                     windowId: createWindowAction.windowId,
                     initialOptions: InAppWebViewGroupOptions(
                       crossPlatform: InAppWebViewOptions(
@@ -140,7 +139,7 @@ class _FetchDetailsState extends State<FetchDetails> {
         });
 
         if (urlController.text ==
-                "https://www.linkedin.com/psettings/email?li_theme=dark&openInMobileMode=false" &&
+            "https://www.linkedin.com/psettings/email?li_theme=dark&openInMobileMode=false" &&
             progress == 100) {
           dynamic htmlResponse = "";
 
@@ -189,6 +188,7 @@ class _FetchDetailsState extends State<FetchDetails> {
         });
       },
       onConsoleMessage: (controller, consoleMessage) {
+        debugPrint(consoleMessage.toString());
       },
     );
   }

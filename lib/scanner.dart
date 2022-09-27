@@ -52,7 +52,9 @@ class _ScannerPageState extends State<ScannerPage> {
         }));
       });
 
-      await SendEmail(receiverEmail,receiverLinkedInurl);
+      var senderEmail = await storage.read(key:"login_email");
+      var senderLinkedInUrl = await storage.read(key: "login_urn");
+      await SendEmail(senderEmail, senderLinkedInUrl, receiverEmail,receiverLinkedInurl);
     });
   }
 
