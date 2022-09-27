@@ -41,3 +41,6 @@ because of usage of javascript injection.
 6. Bloc Listener,
 7. Basic UI components <text, color, stack, colomn, row, etc....>,
 8. smtp.
+
+### Smart Card Doc for internal Track - https://docs.google.com/document/d/1f5kzp-9Q0Mn8QgCVZZjR03Jhwv9ts4hkfEq3mMw0mXE/edit#heading=h.k2nnky35rlis
+### Figma Link - https://www.figma.com/file/ehUl4LDQepAfmu8asjUbQY/Flutter-Hackathon-Project?node-id=0%3A1
